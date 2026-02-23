@@ -436,11 +436,12 @@ export default defineContentScript({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '14px',
-          height: '14px',
+          width: '20px',
+          height: '20px',
         });
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', pathData);
+        path.setAttribute('fill', '#4A5C8F');
         svg.appendChild(path);
         return svg;
       }
