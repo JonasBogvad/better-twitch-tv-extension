@@ -6,13 +6,7 @@ export default defineContentScript({
     // Lowercase Twitch usernames. Replace with remote fetch in Phase 2.
     const BLACKLISTED_USERNAMES: string[] = [
       'trainwreckstv',
-      'roshtein',
-      'nickslive',
-      'itssliker',
-      'classybeef',
-      'xposed',
-      'adinross',
-      // Add more here while testing
+      'vader',
     ];
 
     const BLACKLIST = new Set(BLACKLISTED_USERNAMES.map((n) => n.toLowerCase()));
