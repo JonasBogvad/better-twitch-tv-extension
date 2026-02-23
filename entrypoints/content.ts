@@ -139,18 +139,36 @@ export default defineContentScript({
         color: '#ADADB8',
       });
 
-      const nudge = document.createElement('p');
-      nudge.textContent = '💡 Did you know? Investing 800 kr/month for 10 years at 7% avg return = ~138,000 kr.';
+      const nudge = document.createElement('div');
       Object.assign(nudge.style, {
-        fontSize: '14px',
         maxWidth: '480px',
-        lineHeight: '1.6',
         margin: '0 0 40px 0',
         padding: '16px 20px',
         background: 'rgba(255, 255, 255, 0.05)',
         borderRadius: '8px',
-        color: '#ADADB8',
+        textAlign: 'left',
       });
+
+      const nudgeHeadline = document.createElement('p');
+      nudgeHeadline.textContent = '💡 Did you know?';
+      Object.assign(nudgeHeadline.style, {
+        fontSize: '13px',
+        fontWeight: '700',
+        color: '#EFEFF1',
+        margin: '0 0 8px 0',
+      });
+
+      const nudgeQuote = document.createElement('p');
+      nudgeQuote.textContent = 'Investing 800 kr/month for 10 years at 7% avg return = ~138,000 kr.';
+      Object.assign(nudgeQuote.style, {
+        fontSize: '14px',
+        lineHeight: '1.6',
+        color: '#ADADB8',
+        margin: '0',
+      });
+
+      nudge.appendChild(nudgeHeadline);
+      nudge.appendChild(nudgeQuote);
 
       const buttonRow = document.createElement('div');
       Object.assign(buttonRow.style, { display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' });
