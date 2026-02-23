@@ -243,6 +243,28 @@ export default defineContentScript({
       overlay.appendChild(branding);
 
       document.body.appendChild(overlay);
+
+      // Silence the stream — overlay covers the screen but video still plays underneath
+      muteStream();
+    }
+
+    function muteStream(): void {
+      const video = document.querySelector<HTMLVideoElement>('video');
+      if (video) {
+        video.pause();
+        video.muted = true;
+      } else {
+        // Video might not be in DOM yet — wait for it
+        const waitForVideo = new MutationObserver(() => {
+          const v = document.querySelector<HTMLVideoElement>('video');
+          if (v) {
+            v.pause();
+            v.muted = true;
+            waitForVideo.disconnect();
+          }
+        });
+        waitForVideo.observe(document.body, { childList: true, subtree: true });
+      }
     }
 
     function checkChannelPage(): void {
