@@ -193,8 +193,15 @@ export default defineContentScript({
         letterSpacing: '0.3px',
       });
 
+      const nudgeQuotes = [
+        'Investerer du 800 kr/md. i 10 år med 7% gns. afkast, ender du på ~138.000 kr.',
+        'Huset vinder altid. Gambling-sider er designet til at tage dine penge over tid.',
+        'Renters rente er magisk: 300 kr/md. som 25-årig giver over 800.000 kr. ved pensionsalderen.',
+        'Den gennemsnitlige ludomane taber 120.000 kr. om året – svarende til en ny bil hvert år.',
+        'Et globalt indeksfond har aldrig givet negativt afkast over en 15-årig periode. Gambling kan tømme din konto på en aften.',
+      ];
       const nudgeQuote = document.createElement('p');
-      nudgeQuote.textContent = 'Investerer du 800 kr/md. i 10 år med 7% gns. afkast, ender du på ~138.000 kr.';
+      nudgeQuote.textContent = nudgeQuotes[Math.floor(Math.random() * nudgeQuotes.length)] ?? '';
       Object.assign(nudgeQuote.style, {
         fontSize: '18px',
         lineHeight: '1.7',
