@@ -310,6 +310,19 @@ export default defineContentScript({
       const firstSection = document.querySelector('.side-nav-section');
       if (!firstSection?.parentElement) return;
 
+      // Inject widget-specific animation if not already present
+      if (!document.getElementById('gb-widget-styles')) {
+        const s = document.createElement('style');
+        s.id = 'gb-widget-styles';
+        s.textContent = `
+          @keyframes gb-dot-blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 5px rgba(255, 80, 80, 0.7); }
+            50%       { opacity: 0.25; box-shadow: none; }
+          }
+        `;
+        document.head.appendChild(s);
+      }
+
       const widget = document.createElement('div');
       widget.id = 'gb-widget';
       Object.assign(widget.style, {
@@ -320,6 +333,9 @@ export default defineContentScript({
         borderLeft: '3px solid #9147FF',
         boxSizing: 'border-box',
       });
+
+      // ── Expanded view (sidebar open) ──────────────────────────────────────────
+      const expandedView = document.createElement('div');
 
       const label = document.createElement('div');
       Object.assign(label.style, {
@@ -365,10 +381,72 @@ export default defineContentScript({
         color: '#6B6B7A',
       });
 
-      widget.appendChild(label);
-      widget.appendChild(link);
-      widget.appendChild(branding);
+      expandedView.appendChild(label);
+      expandedView.appendChild(link);
+      expandedView.appendChild(branding);
+
+      // ── Compact view (sidebar collapsed) ─────────────────────────────────────
+      const compactView = document.createElement('div');
+      Object.assign(compactView.style, {
+        display: 'none',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '5px',
+      });
+
+      const dot = document.createElement('div');
+      Object.assign(dot.style, {
+        width: '8px',
+        height: '8px',
+        borderRadius: '50%',
+        background: '#FF5050',
+        animation: 'gb-dot-blink 1.6s ease-in-out infinite',
+        flexShrink: '0',
+      });
+
+      const countLabel = document.createElement('div');
+      countLabel.textContent = String(BLACKLIST.size);
+      Object.assign(countLabel.style, {
+        color: '#ADADB8',
+        fontSize: '11px',
+        fontWeight: '700',
+        lineHeight: '1',
+      });
+
+      compactView.appendChild(dot);
+      compactView.appendChild(countLabel);
+
+      widget.appendChild(expandedView);
+      widget.appendChild(compactView);
       firstSection.parentElement.insertBefore(widget, firstSection);
+
+      // ── Responsive: switch mode when sidebar collapses ────────────────────────
+      // The widget naturally resizes with the sidebar — no class-sniffing needed.
+      const ro = new ResizeObserver((entries) => {
+        const width = entries[0]?.contentRect.width ?? 999;
+        const collapsed = width < 80;
+
+        if (collapsed) {
+          Object.assign(widget.style, {
+            margin: '4px 4px 8px',
+            padding: '6px 4px',
+            borderLeft: 'none',
+            background: 'transparent',
+          });
+          expandedView.style.display = 'none';
+          compactView.style.display = 'flex';
+        } else {
+          Object.assign(widget.style, {
+            margin: '4px 8px 8px',
+            padding: '8px 10px',
+            borderLeft: '3px solid #9147FF',
+            background: 'rgba(145, 71, 255, 0.08)',
+          });
+          expandedView.style.display = 'block';
+          compactView.style.display = 'none';
+        }
+      });
+      ro.observe(widget);
     }
 
     // ─── Sidebar hiding ────────────────────────────────────────────────────────
