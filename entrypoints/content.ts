@@ -122,7 +122,7 @@ export default defineContentScript({
       icon.style.marginBottom = '24px';
 
       const headline = document.createElement('h1');
-      headline.textContent = 'Gambling Content Warning';
+      headline.textContent = 'Gambling Advarsel';
       Object.assign(headline.style, {
         fontSize: '28px',
         fontWeight: '700',
@@ -131,7 +131,7 @@ export default defineContentScript({
       });
 
       const desc = document.createElement('p');
-      desc.textContent = `${username} has been flagged for promoting gambling on stream. Viewing this content may expose you to gambling promotion.`;
+      desc.textContent = `${username} er markeret for at reklamere for gambling på stream. At se dette indhold kan udsætte dig for gambling-reklame.`;
       Object.assign(desc.style, {
         fontSize: '16px',
         maxWidth: '480px',
@@ -184,7 +184,7 @@ export default defineContentScript({
       });
 
       const nudgeHeadline = document.createElement('p');
-      nudgeHeadline.textContent = 'Did you know?';
+      nudgeHeadline.textContent = 'Vidste du det?';
       Object.assign(nudgeHeadline.style, {
         fontSize: '20px',
         fontWeight: '700',
@@ -194,7 +194,7 @@ export default defineContentScript({
       });
 
       const nudgeQuote = document.createElement('p');
-      nudgeQuote.textContent = 'Investing 800 kr/month for 10 years at 7% avg return = ~138,000 kr.';
+      nudgeQuote.textContent = 'Investerer du 800 kr/md. i 10 år med 7% gns. afkast, ender du på ~138.000 kr.';
       Object.assign(nudgeQuote.style, {
         fontSize: '18px',
         lineHeight: '1.7',
@@ -211,7 +211,7 @@ export default defineContentScript({
       Object.assign(buttonRow.style, { display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' });
 
       const backBtn = document.createElement('button');
-      backBtn.textContent = '← Go Back';
+      backBtn.textContent = '← Gå tilbage';
       Object.assign(backBtn.style, {
         padding: '12px 28px',
         background: '#9147FF',
