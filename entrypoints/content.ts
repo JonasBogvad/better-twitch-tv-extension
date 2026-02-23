@@ -430,7 +430,7 @@ export default defineContentScript({
       function makeSvg(pathData: string): SVGSVGElement {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 24 24');
-        svg.setAttribute('fill', '#4A5C8F');
+        svg.setAttribute('fill', '#0F1829');
         Object.assign(svg.style, {
           position: 'absolute',
           top: '50%',
@@ -441,7 +441,7 @@ export default defineContentScript({
         });
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', pathData);
-        path.setAttribute('fill', '#4A5C8F');
+        path.setAttribute('fill', '#0F1829');
         svg.appendChild(path);
         return svg;
       }
