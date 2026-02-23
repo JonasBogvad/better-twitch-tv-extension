@@ -6,8 +6,19 @@ export default defineConfig({
     name: 'Better Twitch TV by Jaxstyle',
     description: 'Hides gambling-promoting streamers from your Twitch experience.',
     version: '0.1.0',
-    permissions: [],
-    host_permissions: ['https://www.twitch.tv/*'],
+    permissions: ['declarativeNetRequest'],
+    host_permissions: [
+      'https://www.twitch.tv/*',
+      'https://usher.ttvnw.net/*',
+      'https://usher.twitch.tv/*',
+    ],
+    declarative_net_request: {
+      rule_resources: [{
+        id: 'blocklist',
+        enabled: true,
+        path: 'rules.json',
+      }],
+    },
   },
   browser: 'edge',
   vite: () => ({
