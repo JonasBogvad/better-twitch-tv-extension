@@ -244,27 +244,43 @@ export default defineContentScript({
 
       document.body.appendChild(overlay);
 
-      // Silence the stream — overlay covers the screen but video still plays underneath
-      muteStream();
+      // Continuously kill the stream — Twitch will try to restart it
+      startStreamKiller();
     }
 
-    function muteStream(): void {
-      const video = document.querySelector<HTMLVideoElement>('video');
-      if (video) {
-        video.pause();
-        video.muted = true;
-      } else {
-        // Video might not be in DOM yet — wait for it
-        const waitForVideo = new MutationObserver(() => {
-          const v = document.querySelector<HTMLVideoElement>('video');
-          if (v) {
-            v.pause();
-            v.muted = true;
-            waitForVideo.disconnect();
-          }
-        });
-        waitForVideo.observe(document.body, { childList: true, subtree: true });
+    // ─── Stream killer ─────────────────────────────────────────────────────────
+
+    let streamKillerInterval: ReturnType<typeof setInterval> | null = null;
+
+    function killAllVideos(): void {
+      document.querySelectorAll<HTMLVideoElement>('video').forEach((v) => {
+        if (!v.paused) v.pause();
+        if (!v.muted) v.muted = true;
+      });
+    }
+
+    function hideMiniPlayer(): void {
+      // Twitch's persistent mini player shown when navigating away from a stream
+      const el = document.querySelector<HTMLElement>(
+        '[data-a-target="persistent-player"], .persistent-player, [class*="persistent-player"]'
+      );
+      if (el) el.style.setProperty('display', 'none', 'important');
+    }
+
+    function startStreamKiller(): void {
+      if (streamKillerInterval) return;
+      killAllVideos();
+      // Keep killing — Twitch restarts the player aggressively
+      streamKillerInterval = setInterval(killAllVideos, 200);
+    }
+
+    function stopStreamKiller(): void {
+      if (streamKillerInterval) {
+        clearInterval(streamKillerInterval);
+        streamKillerInterval = null;
       }
+      // Hide whatever mini player Twitch spawned when we left
+      hideMiniPlayer();
     }
 
     function checkChannelPage(): void {
@@ -277,6 +293,7 @@ export default defineContentScript({
         tryInject();
       } else {
         removeOverlay();
+        stopStreamKiller();
       }
     }
 
@@ -401,6 +418,7 @@ export default defineContentScript({
       injectSidebarWidget();
       scanSidebar();
       scanCards();
+      hideMiniPlayer();
     }
 
     // ─── SPA navigation detection ──────────────────────────────────────────────
