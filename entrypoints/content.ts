@@ -314,9 +314,10 @@ export default defineContentScript({
         s.id = 'gb-rofus-styles';
         s.textContent = `
           @keyframes gb-toggle-slide {
-            0%,  25% { left: 26px; }
-            45%, 70% { left: 2px; }
-            90%, 100% { left: 26px; }
+            0%,  35% { left: 26px; }
+            50%      { left: 2px; }
+            85%      { left: 2px; }
+            100%     { left: 26px; }
           }
         `;
         document.head.appendChild(s);
