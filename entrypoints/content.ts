@@ -427,45 +427,32 @@ export default defineContentScript({
         animation: 'gb-toggle-slide 10s ease-in-out infinite, gb-toggle-glow 10s ease-in-out infinite',
       });
 
-      // Play icon — CSS triangle
-      const playIcon = document.createElement('div');
-      Object.assign(playIcon.style, {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-40%, -50%)',
-        width: '0',
-        height: '0',
-        borderStyle: 'solid',
-        borderWidth: '5px 0 5px 9px',
-        borderColor: 'transparent transparent transparent #4A5C8F',
-        animation: 'gb-icon-play 10s ease-in-out infinite',
-      });
-
-      // Pause icon — two solid bars
-      const pauseIcon = document.createElement('div');
-      Object.assign(pauseIcon.style, {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        display: 'flex',
-        gap: '3px',
-        opacity: '0',
-        animation: 'gb-icon-pause 10s ease-in-out infinite',
-      });
-      const bar1 = document.createElement('div');
-      const bar2 = document.createElement('div');
-      [bar1, bar2].forEach((bar) => {
-        Object.assign(bar.style, {
-          width: '4px',
-          height: '11px',
-          background: '#4A5C8F',
-          borderRadius: '1px',
+      function makeSvg(pathData: string): SVGSVGElement {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', '#4A5C8F');
+        Object.assign(svg.style, {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '14px',
+          height: '14px',
         });
-      });
-      pauseIcon.appendChild(bar1);
-      pauseIcon.appendChild(bar2);
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathData);
+        svg.appendChild(path);
+        return svg;
+      }
+
+      // Play — filled triangle
+      const playIcon = makeSvg('M8 5v14l11-7z');
+      playIcon.style.animation = 'gb-icon-play 10s ease-in-out infinite';
+
+      // Pause — two filled bars
+      const pauseIcon = makeSvg('M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+      pauseIcon.style.opacity = '0';
+      pauseIcon.style.animation = 'gb-icon-pause 10s ease-in-out infinite';
 
       thumb.appendChild(playIcon);
       thumb.appendChild(pauseIcon);
