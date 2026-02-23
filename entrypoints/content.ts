@@ -246,6 +246,10 @@ export default defineContentScript({
       proceedBtn.addEventListener('click', () => {
         removeOverlay();
         stopStreamKiller();
+        document.querySelectorAll<HTMLVideoElement>('video').forEach((v) => {
+          v.muted = false;
+          v.play().catch(() => { /* autoplay policy may block — user can click play */ });
+        });
       });
 
       buttonRow.appendChild(backBtn);
