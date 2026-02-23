@@ -11,6 +11,12 @@ export default defineContentScript({
 
     const BLACKLIST = new Set(BLACKLISTED_USERNAMES.map((n) => n.toLowerCase()));
 
+    // ─── Debug logging (remove before release) ─────────────────────────────────
+    const DEBUG = true;
+    function log(...args: unknown[]): void {
+      if (DEBUG) console.log('[BTTV]', ...args);
+    }
+
     // ─── Utilities ─────────────────────────────────────────────────────────────
 
     /** Extract Twitch channel username from an href like "/channelname" */
@@ -261,28 +267,52 @@ export default defineContentScript({
     }
 
     function hideMiniPlayer(): void {
-      // Twitch's mini player shown in bottom-left when navigating away from a stream.
-      // Target only the wrapper, not the main player container.
       const el = document.querySelector<HTMLElement>(
         '[data-a-target="persistent-player"]'
       );
-      if (el) el.style.setProperty('display', 'none', 'important');
+      if (el) {
+        log('Mini player found and hidden:', el);
+        el.style.setProperty('display', 'none', 'important');
+      } else {
+        // Log ALL bottom-left fixed elements so we can find the right selector
+        document.querySelectorAll<HTMLElement>('*').forEach((node) => {
+          const rect = node.getBoundingClientRect();
+          const style = window.getComputedStyle(node);
+          if (
+            (style.position === 'fixed' || style.position === 'absolute') &&
+            rect.width > 100 && rect.height > 50 &&
+            rect.bottom > window.innerHeight - 400 &&
+            rect.left < 400
+          ) {
+            log('Bottom-left candidate:', {
+              tag: node.tagName,
+              id: node.id,
+              dataATarget: node.dataset['aTarget'],
+              classes: node.className.toString().slice(0, 80),
+              rect: { w: Math.round(rect.width), h: Math.round(rect.height), bottom: Math.round(rect.bottom), left: Math.round(rect.left) },
+            });
+          }
+        });
+      }
     }
 
     function startStreamKiller(): void {
       if (streamKillerInterval) return;
+      log('Stream killer started');
       killAllVideos();
-      // Keep killing — Twitch restarts the player aggressively
       streamKillerInterval = setInterval(killAllVideos, 200);
     }
 
     function stopStreamKiller(): void {
       if (!streamKillerInterval) return;
+      log('Stream killer stopped — watching for mini player for 5s');
       clearInterval(streamKillerInterval);
       streamKillerInterval = null;
-      // Mark that we just left a blocked channel so scanAndHide kills the mini player
       leftBlockedChannel = true;
-      setTimeout(() => { leftBlockedChannel = false; }, 5000);
+      setTimeout(() => {
+        log('Mini player watch window closed');
+        leftBlockedChannel = false;
+      }, 5000);
     }
 
     function checkChannelPage(): void {
