@@ -188,11 +188,23 @@ export default defineContentScript({
       backBtn.addEventListener('click', () => history.back());
 
       buttonRow.appendChild(backBtn);
+
+      const branding = document.createElement('p');
+      branding.textContent = 'Better Twitch TV by Jax Style';
+      Object.assign(branding.style, {
+        position: 'absolute',
+        bottom: '20px',
+        fontSize: '11px',
+        color: '#3D3D3F',
+        margin: '0',
+      });
+
       overlay.appendChild(icon);
       overlay.appendChild(headline);
       overlay.appendChild(desc);
       overlay.appendChild(nudge);
       overlay.appendChild(buttonRow);
+      overlay.appendChild(branding);
 
       document.body.appendChild(overlay);
     }
