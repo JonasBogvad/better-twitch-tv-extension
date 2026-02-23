@@ -1,0 +1,17 @@
+{
+  "name": "better-twitch-tv-by-jaxstyle",
+  "version": "0.1.0",
+  "description": "Better Twitch TV by Jaxstyle — hides gambling-promoting streamers from Twitch",
+  "scripts": {
+    "dev": "wxt dev --browser edge",
+    "build": "wxt build --browser edge",
+    "build:chrome": "wxt build --browser chrome",
+    "zip": "wxt zip --browser edge",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wxt": "^0.19.0",
+    "typescript": "^5.0.0"
+  }
+}
