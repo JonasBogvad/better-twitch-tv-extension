@@ -361,7 +361,7 @@ export default defineContentScript({
       Object.assign(title.style, {
         color: '#FFFFFF',
         fontSize: '22px',
-        fontWeight: '800',
+        fontWeight: '600',
         letterSpacing: '1.5px',
       });
 
