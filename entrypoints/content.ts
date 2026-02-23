@@ -18,7 +18,7 @@ export default defineContentScript({
       // Twitch channel URLs are exactly /channelname (3–25 alphanumeric + underscore)
       // Ignore paths like /directory, /search, /settings etc.
       const match = href.match(/^\/([a-zA-Z0-9_]{3,25})(\/|$)/);
-      if (!match) return null;
+      if (!match || !match[1]) return null;
       const name = match[1].toLowerCase();
       // Exclude known Twitch non-channel paths
       const reserved = new Set(['directory', 'search', 'settings', 'subscriptions', 'wallet', 'inventory', 'drops', 'following', 'videos', 'clips', 'collections', 'schedule', 'squad']);
