@@ -466,7 +466,7 @@ export default defineContentScript({
       question.textContent = 'Spiller du for meget?';
       Object.assign(question.style, {
         color: '#FFFFFF',
-        fontSize: '11px',
+        fontSize: '13px',
         fontWeight: '500',
       });
 
