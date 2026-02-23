@@ -11,11 +11,6 @@ export default defineContentScript({
 
     const BLACKLIST = new Set(BLACKLISTED_USERNAMES.map((n) => n.toLowerCase()));
 
-    // ─── Debug logging (remove before release) ─────────────────────────────────
-    const DEBUG = true;
-    function log(...args: unknown[]): void {
-      if (DEBUG) console.log('[BTTV]', ...args);
-    }
 
     // ─── Utilities ─────────────────────────────────────────────────────────────
 
@@ -268,27 +263,21 @@ export default defineContentScript({
 
     function hideMiniPlayer(): void {
       const el = document.querySelector<HTMLElement>('.persistent-player');
-      if (el) {
-        log('Mini player found and hidden');
-        el.style.setProperty('display', 'none', 'important');
-      }
+      if (el) el.style.setProperty('display', 'none', 'important');
     }
 
     function startStreamKiller(): void {
       if (streamKillerInterval) return;
-      log('Stream killer started');
       killAllVideos();
       streamKillerInterval = setInterval(killAllVideos, 200);
     }
 
     function stopStreamKiller(): void {
       if (!streamKillerInterval) return;
-      log('Stream killer stopped — watching for mini player for 5s');
       clearInterval(streamKillerInterval);
       streamKillerInterval = null;
       leftBlockedChannel = true;
       setTimeout(() => {
-        log('Mini player watch window closed');
         leftBlockedChannel = false;
       }, 5000);
     }
