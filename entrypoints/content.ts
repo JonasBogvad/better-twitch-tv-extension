@@ -245,11 +245,7 @@ export default defineContentScript({
       });
       proceedBtn.addEventListener('click', () => {
         removeOverlay();
-        stopStreamKiller();
-        document.querySelectorAll<HTMLVideoElement>('video').forEach((v) => {
-          v.muted = false;
-          v.play().catch(() => { /* autoplay policy may block — user can click play */ });
-        });
+        unmuteStream();
       });
 
       buttonRow.appendChild(backBtn);
@@ -274,41 +270,23 @@ export default defineContentScript({
 
       document.body.appendChild(overlay);
 
-      // Continuously kill the stream — Twitch will try to restart it
-      startStreamKiller();
+      // Mute the stream while the overlay is visible — it runs in the background
+      // so it resumes instantly if the user chooses to proceed.
+      muteStream();
     }
 
-    // ─── Stream killer ─────────────────────────────────────────────────────────
+    // ─── Stream mute ───────────────────────────────────────────────────────────
 
-    let streamKillerInterval: ReturnType<typeof setInterval> | null = null;
-    let leftBlockedChannel = false;
-
-    function killAllVideos(): void {
+    function muteStream(): void {
       document.querySelectorAll<HTMLVideoElement>('video').forEach((v) => {
-        if (!v.paused) v.pause();
-        if (!v.muted) v.muted = true;
+        v.muted = true;
       });
     }
 
-    function hideMiniPlayer(): void {
-      const el = document.querySelector<HTMLElement>('.persistent-player');
-      if (el) el.style.setProperty('display', 'none', 'important');
-    }
-
-    function startStreamKiller(): void {
-      if (streamKillerInterval) return;
-      killAllVideos();
-      streamKillerInterval = setInterval(killAllVideos, 200);
-    }
-
-    function stopStreamKiller(): void {
-      if (!streamKillerInterval) return;
-      clearInterval(streamKillerInterval);
-      streamKillerInterval = null;
-      leftBlockedChannel = true;
-      setTimeout(() => {
-        leftBlockedChannel = false;
-      }, 5000);
+    function unmuteStream(): void {
+      document.querySelectorAll<HTMLVideoElement>('video').forEach((v) => {
+        v.muted = false;
+      });
     }
 
     function checkChannelPage(): void {
@@ -321,7 +299,6 @@ export default defineContentScript({
         tryInject();
       } else {
         removeOverlay();
-        stopStreamKiller();
       }
     }
 
@@ -524,8 +501,6 @@ export default defineContentScript({
       injectSidebarWidget();
       scanSidebar();
       scanCards();
-      // Kill mini player only in the window after leaving a blocked channel
-      if (leftBlockedChannel) hideMiniPlayer();
     }
 
     // ─── SPA navigation detection ──────────────────────────────────────────────
