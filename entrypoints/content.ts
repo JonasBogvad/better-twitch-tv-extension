@@ -302,6 +302,72 @@ export default defineContentScript({
       }
     }
 
+    // ─── ROFUS top bar widget ──────────────────────────────────────────────────
+    // Fixed pill injected into the top bar area linking to the Danish
+    // self-exclusion register for gambling (rofus.nu).
+
+    function injectRofusWidget(): void {
+      if (document.getElementById('gb-rofus')) return;
+
+      const widget = document.createElement('a');
+      widget.id = 'gb-rofus';
+      widget.href = 'https://www.rofus.nu/';
+      widget.target = '_blank';
+      widget.rel = 'noopener noreferrer';
+      Object.assign(widget.style, {
+        position: 'fixed',
+        top: '8px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '9998',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '7px',
+        padding: '5px 14px',
+        background: 'rgba(18, 18, 28, 0.88)',
+        border: '1px solid #3A3A4A',
+        borderRadius: '20px',
+        color: '#ADADB8',
+        fontSize: '12px',
+        fontWeight: '500',
+        textDecoration: 'none',
+        fontFamily: "'Roobert', Inter, 'Helvetica Neue', Arial, sans-serif",
+        backdropFilter: 'blur(8px)',
+        whiteSpace: 'nowrap',
+        cursor: 'pointer',
+        transition: 'border-color 0.15s, color 0.15s',
+      });
+
+      const icon = document.createElement('span');
+      icon.textContent = '⚠️';
+      icon.style.fontSize = '13px';
+
+      const question = document.createElement('span');
+      question.textContent = 'Har du problemer med spil?';
+
+      const cta = document.createElement('span');
+      cta.textContent = 'Tilmeld ROFUS →';
+      Object.assign(cta.style, {
+        color: '#9147FF',
+        fontWeight: '600',
+      });
+
+      widget.appendChild(icon);
+      widget.appendChild(question);
+      widget.appendChild(cta);
+
+      widget.addEventListener('mouseenter', () => {
+        widget.style.borderColor = '#9147FF';
+        widget.style.color = '#EFEFF1';
+      });
+      widget.addEventListener('mouseleave', () => {
+        widget.style.borderColor = '#3A3A4A';
+        widget.style.color = '#ADADB8';
+      });
+
+      document.body.appendChild(widget);
+    }
+
     // ─── Sidebar widget ────────────────────────────────────────────────────────
     // Small banner injected above the first sidebar section showing blocked count
     // and linking to the Wall of Shame.
@@ -498,6 +564,7 @@ export default defineContentScript({
     }
 
     function scanAndHide(): void {
+      injectRofusWidget();
       injectSidebarWidget();
       scanSidebar();
       scanCards();
