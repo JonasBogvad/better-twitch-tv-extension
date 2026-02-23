@@ -434,7 +434,16 @@ export default defineContentScript({
       bottomRow.appendChild(mitid);
       bottomRow.appendChild(lock);
 
+      const question = document.createElement('span');
+      question.textContent = 'Spiller du for meget?';
+      Object.assign(question.style, {
+        color: '#ADADB8',
+        fontSize: '11px',
+        fontWeight: '500',
+      });
+
       widget.appendChild(topRow);
+      widget.appendChild(question);
       widget.appendChild(bottomRow);
 
       widget.addEventListener('mouseenter', () => {
