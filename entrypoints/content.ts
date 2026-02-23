@@ -284,19 +284,31 @@ export default defineContentScript({
       });
 
       const label = document.createElement('div');
-      label.textContent = `\uD83D\uDEAB ${BLACKLIST.size} gambling streamer${BLACKLIST.size !== 1 ? 's' : ''} blocked`;
       Object.assign(label.style, {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '5px',
         color: '#EFEFF1',
         fontSize: '12px',
         fontWeight: '600',
         lineHeight: '1.4',
       });
 
+      const labelEmoji = document.createElement('span');
+      labelEmoji.textContent = '\uD83D\uDEAB';
+      labelEmoji.style.flexShrink = '0';
+
+      const labelText = document.createElement('span');
+      labelText.textContent = `${BLACKLIST.size} gambling-streamere blokeret`;
+
+      label.appendChild(labelEmoji);
+      label.appendChild(labelText);
+
       const link = document.createElement('a');
       link.href = WALL_OF_SHAME_URL;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.textContent = 'View Wall of Shame \u2192';
+      link.textContent = 'Se Wall of Shame \u2192';
       Object.assign(link.style, {
         display: 'block',
         marginTop: '3px',
