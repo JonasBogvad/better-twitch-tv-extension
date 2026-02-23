@@ -267,32 +267,10 @@ export default defineContentScript({
     }
 
     function hideMiniPlayer(): void {
-      const el = document.querySelector<HTMLElement>(
-        '[data-a-target="persistent-player"]'
-      );
+      const el = document.querySelector<HTMLElement>('.persistent-player');
       if (el) {
-        log('Mini player found and hidden:', el);
+        log('Mini player found and hidden');
         el.style.setProperty('display', 'none', 'important');
-      } else {
-        // Log ALL bottom-left fixed elements so we can find the right selector
-        document.querySelectorAll<HTMLElement>('*').forEach((node) => {
-          const rect = node.getBoundingClientRect();
-          const style = window.getComputedStyle(node);
-          if (
-            (style.position === 'fixed' || style.position === 'absolute') &&
-            rect.width > 100 && rect.height > 50 &&
-            rect.bottom > window.innerHeight - 400 &&
-            rect.left < 400
-          ) {
-            log('Bottom-left candidate:', {
-              tag: node.tagName,
-              id: node.id,
-              dataATarget: node.dataset['aTarget'],
-              classes: node.className.toString().slice(0, 80),
-              rect: { w: Math.round(rect.width), h: Math.round(rect.height), bottom: Math.round(rect.bottom), left: Math.round(rect.left) },
-            });
-          }
-        });
       }
     }
 
