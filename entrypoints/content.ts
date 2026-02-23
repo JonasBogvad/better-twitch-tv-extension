@@ -323,10 +323,17 @@ export default defineContentScript({
         s.id = 'gb-rofus-styles';
         s.textContent = `
           @keyframes gb-toggle-slide {
-            0%,  35% { left: 26px; }
-            50%      { left: 2px; }
-            85%      { left: 2px; }
-            100%     { left: 26px; }
+            0%, 8%   { left: 2px;  animation-timing-function: ease-in; }
+            21%      { left: 30px; animation-timing-function: ease-out; }
+            25%      { left: 23px; animation-timing-function: ease-in-out; }
+            29%, 82% { left: 26px; }
+            93%, 100% { left: 2px; }
+          }
+          @keyframes gb-toggle-glow {
+            0%, 27%   { box-shadow: none; }
+            31%       { box-shadow: 0 0 0 4px rgba(255,255,255,0.28); }
+            40%, 80%  { box-shadow: 0 0 0 2px rgba(255,255,255,0.10); }
+            90%, 100% { box-shadow: none; }
           }
         `;
         document.head.appendChild(s);
@@ -389,7 +396,7 @@ export default defineContentScript({
       const thumb = document.createElement('div');
       Object.assign(thumb.style, {
         position: 'absolute',
-        left: '26px',   // starts on the right side of the 52px track
+        left: '2px',    // starts on the left (play position)
         top: '2px',
         width: '24px',
         height: '24px',
@@ -402,7 +409,7 @@ export default defineContentScript({
         color: '#4A5C8F',
         fontWeight: '900',
         letterSpacing: '-1px',
-        animation: 'gb-toggle-slide 10s ease-in-out infinite',
+        animation: 'gb-toggle-slide 10s ease-in-out infinite, gb-toggle-glow 10s ease-in-out infinite',
       });
       thumb.textContent = '\u23F8'; // ⏸ pause symbol
 
