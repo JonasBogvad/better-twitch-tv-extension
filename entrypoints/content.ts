@@ -319,49 +319,105 @@ export default defineContentScript({
         top: '120px',
         left: '260px',
         zIndex: '9998',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '7px',
-        padding: '5px 14px',
-        background: 'rgba(18, 18, 28, 0.88)',
-        border: '1px solid #3A3A4A',
-        borderRadius: '20px',
-        color: '#ADADB8',
-        fontSize: '12px',
-        fontWeight: '500',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6px',
+        padding: '12px 14px',
+        background: '#0F1829',
+        borderRadius: '10px',
         textDecoration: 'none',
         fontFamily: "'Roobert', Inter, 'Helvetica Neue', Arial, sans-serif",
-        backdropFilter: 'blur(8px)',
-        whiteSpace: 'nowrap',
         cursor: 'pointer',
-        transition: 'border-color 0.15s, color 0.15s',
+        minWidth: '175px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+        border: '1px solid rgba(255,255,255,0.06)',
+        transition: 'border-color 0.15s',
       });
 
-      const icon = document.createElement('span');
-      icon.textContent = '⚠️';
-      icon.style.fontSize = '13px';
-
-      const question = document.createElement('span');
-      question.textContent = 'Har du problemer med spil?';
-
-      const cta = document.createElement('span');
-      cta.textContent = 'Tilmeld ROFUS →';
-      Object.assign(cta.style, {
-        color: '#9147FF',
-        fontWeight: '600',
+      // ── Top row: ROFUS title + toggle ─────────────────────────────────────────
+      const topRow = document.createElement('div');
+      Object.assign(topRow.style, {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '12px',
       });
 
-      widget.appendChild(icon);
-      widget.appendChild(question);
-      widget.appendChild(cta);
+      const title = document.createElement('span');
+      title.textContent = 'ROFUS';
+      Object.assign(title.style, {
+        color: '#FFFFFF',
+        fontSize: '22px',
+        fontWeight: '800',
+        letterSpacing: '1.5px',
+      });
+
+      // Toggle: rounded track with pause-icon thumb on the right
+      const track = document.createElement('div');
+      Object.assign(track.style, {
+        width: '52px',
+        height: '28px',
+        borderRadius: '14px',
+        background: '#4A5C8F',
+        position: 'relative',
+        flexShrink: '0',
+      });
+
+      const thumb = document.createElement('div');
+      Object.assign(thumb.style, {
+        position: 'absolute',
+        right: '2px',
+        top: '2px',
+        width: '24px',
+        height: '24px',
+        borderRadius: '50%',
+        background: '#FFFFFF',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '9px',
+        color: '#4A5C8F',
+        fontWeight: '900',
+        letterSpacing: '-1px',
+      });
+      thumb.textContent = '\u23F8'; // ⏸ pause symbol
+
+      track.appendChild(thumb);
+      topRow.appendChild(title);
+      topRow.appendChild(track);
+
+      // ── Bottom row: MitID label + lock ────────────────────────────────────────
+      const bottomRow = document.createElement('div');
+      Object.assign(bottomRow.style, {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '8px',
+      });
+
+      const mitid = document.createElement('span');
+      mitid.textContent = 'Log på ROFUS med MitID';
+      Object.assign(mitid.style, {
+        color: '#F5C842',
+        fontSize: '11px',
+        fontWeight: '500',
+      });
+
+      const lock = document.createElement('span');
+      lock.textContent = '\uD83D\uDD13'; // 🔓 — open lock since it's an invitation to register
+      lock.style.fontSize = '12px';
+
+      bottomRow.appendChild(mitid);
+      bottomRow.appendChild(lock);
+
+      widget.appendChild(topRow);
+      widget.appendChild(bottomRow);
 
       widget.addEventListener('mouseenter', () => {
-        widget.style.borderColor = '#9147FF';
-        widget.style.color = '#EFEFF1';
+        widget.style.borderColor = 'rgba(255,255,255,0.18)';
       });
       widget.addEventListener('mouseleave', () => {
-        widget.style.borderColor = '#3A3A4A';
-        widget.style.color = '#ADADB8';
+        widget.style.borderColor = 'rgba(255,255,255,0.06)';
       });
 
       document.body.appendChild(widget);
