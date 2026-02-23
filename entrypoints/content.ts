@@ -335,6 +335,16 @@ export default defineContentScript({
             40%, 80%  { box-shadow: 0 0 0 2px rgba(255,255,255,0.10); }
             90%, 100% { box-shadow: none; }
           }
+          @keyframes gb-icon-play {
+            0%, 18%   { opacity: 1; }
+            25%, 92%  { opacity: 0; }
+            97%, 100% { opacity: 1; }
+          }
+          @keyframes gb-icon-pause {
+            0%, 18%   { opacity: 0; }
+            25%, 92%  { opacity: 1; }
+            97%, 100% { opacity: 0; }
+          }
         `;
         document.head.appendChild(s);
       }
@@ -408,10 +418,26 @@ export default defineContentScript({
         fontSize: '9px',
         color: '#4A5C8F',
         fontWeight: '900',
-        letterSpacing: '-1px',
         animation: 'gb-toggle-slide 10s ease-in-out infinite, gb-toggle-glow 10s ease-in-out infinite',
       });
-      thumb.textContent = '\u23F8'; // ⏸ pause symbol
+
+      const playIcon = document.createElement('span');
+      playIcon.textContent = '\u25B6'; // ▶
+      Object.assign(playIcon.style, {
+        position: 'absolute',
+        animation: 'gb-icon-play 10s ease-in-out infinite',
+      });
+
+      const pauseIcon = document.createElement('span');
+      pauseIcon.textContent = '\u23F8'; // ⏸
+      Object.assign(pauseIcon.style, {
+        position: 'absolute',
+        opacity: '0',
+        animation: 'gb-icon-pause 10s ease-in-out infinite',
+      });
+
+      thumb.appendChild(playIcon);
+      thumb.appendChild(pauseIcon);
 
       track.appendChild(thumb);
       topRow.appendChild(title);
