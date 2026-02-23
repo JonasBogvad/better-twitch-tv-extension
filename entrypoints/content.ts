@@ -257,6 +257,9 @@ export default defineContentScript({
     }
 
     // ─── SPA navigation detection ──────────────────────────────────────────────
+    // Twitch uses React Router which caches a reference to history.pushState
+    // before our content script runs — patching history.pushState is not reliable.
+    // Poll for URL changes instead; this is the standard pattern for Twitch extensions.
 
     let lastUrl = window.location.href;
 
@@ -272,11 +275,10 @@ export default defineContentScript({
       setTimeout(scanAndHide, 1500);
     }
 
-    const originalPushState = history.pushState.bind(history);
-    const originalReplaceState = history.replaceState.bind(history);
+    // Primary: poll every 300ms — imperceptible to users, catches all SPA navigations
+    setInterval(onNavigate, 300);
 
-    history.pushState = (...args) => { originalPushState(...args); onNavigate(); };
-    history.replaceState = (...args) => { originalReplaceState(...args); onNavigate(); };
+    // Secondary: popstate covers browser back/forward button
     window.addEventListener('popstate', onNavigate);
 
     // ─── MutationObserver ──────────────────────────────────────────────────────
