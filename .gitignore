@@ -39,3 +39,4 @@ yarn-error.log*
 
 # Prisma
 prisma/migrations/dev/
+CLAUDE.md
