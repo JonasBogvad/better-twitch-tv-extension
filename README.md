@@ -43,7 +43,8 @@
 | Target | Chrome / Edge (Manifest V3) |
 | Twitch blacklist API | [nogamblettv.app/api/blacklist](https://www.nogamblettv.app/api/blacklist) |
 | Kick blacklist API | [nogamblettv.app/api/kicklist](https://www.nogamblettv.app/api/kicklist) |
-| Categories API | [nogamblettv.app/api/categories](https://www.nogamblettv.app/api/categories) |
+| Twitch categories API | [nogamblettv.app/api/categories](https://www.nogamblettv.app/api/categories) |
+| Kick categories API | [nogamblettv.app/api/categories/kick](https://www.nogamblettv.app/api/categories/kick) |
 
 ---
 
