@@ -32,7 +32,10 @@
 
 ## Phase 3 – Community & reach 🚧
 
-- [ ] "Is this streamer promoting gambling? Tip us →" link in ROFUS widget
+- [x] Internationalized overlay + widget: 11 languages, 11 self-exclusion registries
+        detection via navigator.languages (exact match) → timezone fallback → English + no widget
+        translations + registry data extracted to `utils/i18n.ts`
+- [ ] "Is this streamer promoting gambling? Tip us →" link in widget
         shown only on non-blacklisted streams in blocked categories
         links to `www.nogamblettv.app/#tip?streamer={username}` (pre-fills form)
         requires tip form to support `?streamer=` query param

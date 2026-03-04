@@ -1,6 +1,6 @@
 {
   "name": "nogamble-extension",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "NoGamble — hides gambling-promoting streamers from Twitch",
   "scripts": {
     "dev": "wxt dev --browser edge",
