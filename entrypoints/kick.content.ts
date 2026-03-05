@@ -129,7 +129,8 @@ export default defineContentScript({
       }
 
       if (streamSlug && BLOCKED_CATEGORIES.has(streamSlug)) {
-        if (reg) injectWidget(reg, tx, getKickPosition, reinjectKickWidget);
+        if (reg) injectWidget(reg, tx, getKickPosition, reinjectKickWidget,
+          `https://www.nogamblettv.app/?u=${encodeURIComponent(channel)}&p=kick#tip`);
       } else {
         removeWidget();
       }

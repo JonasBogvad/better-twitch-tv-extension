@@ -155,7 +155,8 @@ export default defineContentScript({
       const streamSlug = gameLink ? extractCategory(gameLink.getAttribute('href') ?? '') : null;
 
       if (streamSlug && BLOCKED_CATEGORIES.has(streamSlug)) {
-        if (reg) injectWidget(reg, tx, getTwitchWidgetPosition, reinjectTwitchWidget);
+        if (reg) injectWidget(reg, tx, getTwitchWidgetPosition, reinjectTwitchWidget,
+          `https://www.nogamblettv.app/?u=${encodeURIComponent(channel)}&p=twitch#tip`);
       } else {
         removeWidget();
       }

@@ -21,7 +21,7 @@
 - **Hides** blacklisted streamers from the sidebar, browse, homepage, and all recommendations — no empty space left behind
 - **Hides** gambling category tiles (Slots, Casino, Roulette, etc.) from the directory
 - **Overlays** a warning when navigating directly to a blacklisted channel or gambling category page
-- **Self-exclusion widget** appears on any stream currently live in a blocked gambling category — links to the country's self-exclusion register (11 countries supported)
+- **Self-exclusion widget** appears on any stream currently live in a blocked gambling category — links to the country's self-exclusion register (11 countries supported) — hover the widget to tip the channel directly
 - **Mutes** the stream while the warning overlay is shown, unmutes if the user chooses to proceed
 - Responsive to sidebar collapse, theatre mode, and fullscreen
 
@@ -29,7 +29,7 @@
 - **Hides** blacklisted channels from the following/recommended sidebar and browse cards
 - **Hides** blocked category tiles from the categories page
 - **Overlays** a warning when navigating directly to a blacklisted channel or blocked category
-- **Self-exclusion widget** on blacklisted channel pages and streams playing blocked categories
+- **Self-exclusion widget** on blacklisted channel pages and streams playing blocked categories — hover to tip the channel
 - Responsive to theatre mode and sidebar state
 
 ---

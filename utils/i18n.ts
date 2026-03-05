@@ -11,6 +11,7 @@ export interface LocaleData {
   backBtn: string;
   proceedBtn: string;
   widgetQuestion: string;
+  reportChannel: string;
   quotes: string[];
 }
 
@@ -30,6 +31,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Gå tilbage',
     proceedBtn: 'Fortsæt Alligevel',
     widgetQuestion: 'Spiller du for meget?',
+    reportChannel: 'Tip denne kanal',
     quotes: [
       'Investerer du 800 kr/md. i 10 år med 7% gns. afkast, ender du på ~138.000 kr.',
       'Huset vinder altid. Gambling-sider er designet til at tage dine penge over tid.',
@@ -46,6 +48,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Go back',
     proceedBtn: 'Continue Anyway',
     widgetQuestion: 'Are you gambling too much?',
+    reportChannel: 'Tip this channel',
     quotes: [
       "Invest £90/month for 10 years at 7% average return and you'll end up with ~£15,000.",
       'The house always wins. Gambling sites are designed to take your money over time.',
@@ -62,6 +65,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Gå tillbaka',
     proceedBtn: 'Fortsätt ändå',
     widgetQuestion: 'Spelar du för mycket?',
+    reportChannel: 'Tipsa om den här kanalen',
     quotes: [
       'Investerar du 1 100 kr/mån i 10 år med 7% genomsnittlig avkastning, landar du på ~190 000 kr.',
       'Huset vinner alltid. Spelbolag är utformade för att ta dina pengar över tid.',
@@ -78,6 +82,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Zurück',
     proceedBtn: 'Trotzdem fortfahren',
     widgetQuestion: 'Spielst du zu viel?',
+    reportChannel: 'Tipp zu diesem Kanal senden',
     quotes: [
       'Wer 100 €/Monat für 10 Jahre bei 7% durchschnittlicher Rendite anlegt, kommt auf ~17.000 €.',
       'Das Haus gewinnt immer. Glücksspielseiten sind darauf ausgelegt, dir über die Zeit dein Geld abzunehmen.',
@@ -94,6 +99,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Zurück',
     proceedBtn: 'Trotzdem fortfahren',
     widgetQuestion: 'Spielst du zu viel?',
+    reportChannel: 'Tipp zu diesem Kanal senden',
     quotes: [
       'Wer 100 CHF/Monat für 10 Jahre bei 7% durchschnittlicher Rendite anlegt, kommt auf ~17.000 CHF.',
       'Das Haus gewinnt immer. Glücksspielseiten sind darauf ausgelegt, dir über die Zeit dein Geld abzunehmen.',
@@ -110,6 +116,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Ga terug',
     proceedBtn: 'Toch doorgaan',
     widgetQuestion: 'Gok je te veel?',
+    reportChannel: 'Tip over dit kanaal sturen',
     quotes: [
       'Beleg je €100/maand gedurende 10 jaar bij 7% gemiddeld rendement, dan eindig je op ~€17.000.',
       'Het huis wint altijd. Goksites zijn ontworpen om jouw geld over tijd af te pakken.',
@@ -126,6 +133,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Retour',
     proceedBtn: 'Continuer quand même',
     widgetQuestion: 'Joues-tu trop ?',
+    reportChannel: 'Envoyer un signalement',
     quotes: [
       "En investissant 100 €/mois pendant 10 ans avec un rendement moyen de 7%, tu arrives à ~17 000 €.",
       "La maison gagne toujours. Les sites de jeux d'argent sont conçus pour prendre ton argent sur la durée.",
@@ -142,6 +150,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Retour',
     proceedBtn: 'Continuer quand même',
     widgetQuestion: 'Joues-tu trop ?',
+    reportChannel: 'Envoyer un signalement',
     quotes: [
       "En investissant 100 €/mois pendant 10 ans avec un rendement moyen de 7%, tu arrives à ~17 000 €.",
       "La maison gagne toujours. Les sites de jeux d'argent sont conçus pour prendre ton argent sur la durée.",
@@ -158,6 +167,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Torna indietro',
     proceedBtn: 'Continua comunque',
     widgetQuestion: "Giochi d'azzardo troppo spesso?",
+    reportChannel: 'Invia una segnalazione',
     quotes: [
       "Se investi 100 €/mese per 10 anni con un rendimento medio del 7%, arrivi a ~17.000 €.",
       "Il banco vince sempre. I siti di gioco d'azzardo sono progettati per prendere i tuoi soldi nel tempo.",
@@ -174,6 +184,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Voltar',
     proceedBtn: 'Continuar na mesma',
     widgetQuestion: 'Jogas demasiado?',
+    reportChannel: 'Enviar uma denúncia',
     quotes: [
       'Se investires 100 €/mês durante 10 anos com uma rentabilidade média de 7%, acabas com ~17.000 €.',
       'A casa ganha sempre. Os sites de apostas são feitos para ficar com o teu dinheiro ao longo do tempo.',
@@ -190,6 +201,7 @@ export const LOCALES: Record<LocaleKey, LocaleData> = {
     backBtn: '← Volver',
     proceedBtn: 'Continuar de todas formas',
     widgetQuestion: '¿Juegas demasiado?',
+    reportChannel: 'Enviar un aviso',
     quotes: [
       'Si inviertes 100 €/mes durante 10 años con una rentabilidad media del 7%, llegas a ~17.000 €.',
       'La banca siempre gana. Los sitios de apuestas están diseñados para quedarse con tu dinero con el tiempo.',

@@ -19,6 +19,7 @@ export function injectWidget(
   tx: LocaleData,
   getPosition: () => { top: string; left: string },
   onAfterCooldown?: () => void,
+  reportUrl?: string,
 ): void {
   if (document.getElementById(WIDGET_ID)) return;
 
@@ -73,7 +74,7 @@ export function injectWidget(
     display: 'flex',
     flexDirection: 'column',
     gap: '6px',
-    padding: '12px 14px',
+    padding: '8px 14px',
     background: '#0F1829',
     borderRadius: '10px',
     textDecoration: 'none',
@@ -209,13 +210,61 @@ export function injectWidget(
   });
   widget.appendChild(dismissBtn);
 
+  // ── Optional report row ────────────────────────────────────────────────────
+  let reportRow: HTMLDivElement | null = null;
+  if (reportUrl) {
+    reportRow = document.createElement('div');
+    Object.assign(reportRow.style, {
+      maxHeight: '0',
+      overflow: 'hidden',
+      opacity: '0',
+      transition: 'max-height 0.2s ease, opacity 0.15s, margin-top 0.2s ease, padding-top 0.2s ease',
+    });
+    const reportBtn = document.createElement('button');
+    reportBtn.textContent = '→ ' + tx.reportChannel;
+    Object.assign(reportBtn.style, {
+      background: 'none',
+      border: 'none',
+      color: 'rgba(255,255,255,0.45)',
+      fontSize: '11px',
+      cursor: 'pointer',
+      padding: '0',
+      width: '100%',
+      textAlign: 'left',
+      transition: 'color 0.15s',
+    });
+    reportBtn.addEventListener('mouseenter', () => { reportBtn.style.color = 'rgba(255,255,255,0.85)'; });
+    reportBtn.addEventListener('mouseleave', () => { reportBtn.style.color = 'rgba(255,255,255,0.45)'; });
+    reportBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(reportUrl, '_blank', 'noopener,noreferrer');
+    });
+    reportRow.appendChild(reportBtn);
+    widget.appendChild(reportRow);
+  }
+
   widget.addEventListener('mouseenter', () => {
     widget.style.borderColor = 'rgba(255,255,255,0.18)';
     dismissBtn.style.opacity = '1';
+    if (reportRow) {
+      reportRow.style.maxHeight = '32px';
+      reportRow.style.marginTop = '6px';
+      reportRow.style.paddingTop = '6px';
+      reportRow.style.borderTop = '1px solid rgba(255,255,255,0.07)';
+      reportRow.style.opacity = '1';
+    }
   });
   widget.addEventListener('mouseleave', () => {
     widget.style.borderColor = 'rgba(255,255,255,0.06)';
     dismissBtn.style.opacity = '0';
+    if (reportRow) {
+      reportRow.style.maxHeight = '0';
+      reportRow.style.marginTop = '0';
+      reportRow.style.paddingTop = '0';
+      reportRow.style.borderTop = 'none';
+      reportRow.style.opacity = '0';
+    }
   });
 
   document.body.appendChild(widget);
