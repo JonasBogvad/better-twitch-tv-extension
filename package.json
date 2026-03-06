@@ -16,6 +16,10 @@
   "devDependencies": {
     "husky": "^9.1.7",
     "typescript": "^5.0.0",
-    "wxt": "^0.20.18"
+    "wxt": "0.19.29"
+  },
+  "overrides": {
+    "minimatch": "^10.0.1",
+    "tar": "^7.5.10"
   }
 }
