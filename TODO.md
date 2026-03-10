@@ -43,7 +43,9 @@
         gecko ID: `nogamble-ttv@nogamblettv.app`, `strict_min_version: '142.0'`
         `data_collection_permissions: { required: ['none'], optional: [] }`
         language-agnostic layout detection (`.side-nav--collapsed`, `[data-a-player-state="theatre"]`, `document.fullscreenElement`, `[data-testid="sidebar-collapse"]` for Kick)
-        submitted to AMO at v0.3.3
+        submitted to AMO at v0.3.6
+- [x] Fixed homepage card hiding — targets shelf-card slot to prevent hiding entire recommended section (v0.3.6)
+
 ## Phase 4 – YouTube support 🚧
 
 - [ ] Add `YOUTUBE` to platform enum in web schema (`BlockedStreamer`, `BlockedCategory`, `FlagReport`)
